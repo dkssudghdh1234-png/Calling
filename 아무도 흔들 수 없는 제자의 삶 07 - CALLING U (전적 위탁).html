@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>아무도 흔들 수 없는 제자의 삶 07 - CALLING U</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+/* =========================================================
+   매일 수정할 필요 없는 디자인 영역
+   ========================================================= */
+:root{
+  --blue:#1e3a8a;        /* 로얄 블루 */
+  --blue-bright:#2563eb; /* 밝은 블루 (악센트) */
+  --ink:#0a0a0a;         /* 검정 */
+  --ink-soft:#1c1c1e;
+  --paper:#ffffff;       /* 흰 */
+  --mist:#f4f6fb;
+  --line:rgba(255,255,255,.14);
+  --serif:'Gowun Batang', serif;
+  --sans:'Pretendard','Pretendard Variable',-apple-system,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;overflow:hidden;background:var(--ink);}
+body{font-family:var(--sans);color:var(--paper);}
+
+/* 슬라이드 컨테이너 */
+#deck{height:100dvh;width:100vw;overflow-y:scroll;scroll-snap-type:y mandatory;scroll-behavior:smooth;}
+#deck::-webkit-scrollbar{display:none;}
+#deck{-ms-overflow-style:none;scrollbar-width:none;}
+
+.slide{
+  height:100dvh;width:100%;scroll-snap-align:start;scroll-snap-stop:always;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:clamp(28px,7vw,72px) clamp(24px,7vw,80px);
+  position:relative;overflow:hidden;
+}
+.wrap{max-width:680px;width:100%;margin:0 auto;position:relative;z-index:2;}
+
+/* 등장 애니메이션 */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1);}
+.slide.active .reveal{opacity:1;transform:none;}
+.slide.active .d1{transition-delay:.10s;}
+.slide.active .d2{transition-delay:.25s;}
+.slide.active .d3{transition-delay:.40s;}
+.slide.active .d4{transition-delay:.55s;}
+
+/* 챕터 라벨 */
+.chip{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;font-weight:600;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--blue-bright);margin-bottom:22px;}
+.chip::before{content:"";width:26px;height:1.5px;background:var(--blue-bright);display:inline-block;}
+.chip.on-dark{color:#9db8ff;}
+.chip.on-light::before,.chip.on-light{color:var(--blue);}
+.chip.on-light::before{background:var(--blue);}
+
+h2.title{font-family:var(--sans);font-weight:800;line-height:1.18;letter-spacing:-.02em;
+  font-size:clamp(1.7rem,6vw,2.7rem);margin-bottom:24px;}
+
+.body-text{font-family:var(--serif);font-size:clamp(1.06rem,3.6vw,1.28rem);line-height:1.95;
+  font-weight:400;word-break:keep-all;}
+.body-text.light{color:rgba(255,255,255,.9);}
+.body-text.dark{color:#2a2a2e;}
+
+/* ---------- 1. 인트로 ---------- */
+#intro{background:radial-gradient(120% 120% at 50% 0%,#1e3a8a 0%,#0f1f50 45%,#05060f 100%);text-align:center;align-items:center;}
+#intro .wrap{display:flex;flex-direction:column;align-items:center;}
+.glow{position:absolute;width:480px;height:480px;border-radius:50%;
+  background:radial-gradient(circle,rgba(37,99,235,.35) 0%,transparent 70%);
+  top:-120px;left:50%;transform:translateX(-50%);filter:blur(20px);z-index:1;}
+.qt-date{font-size:.8rem;letter-spacing:.32em;color:#7d97e0;font-weight:500;margin-bottom:30px;}
+.qt-hook{font-family:var(--serif);font-weight:700;font-size:clamp(2rem,8.5vw,3.4rem);
+  line-height:1.32;letter-spacing:-.01em;margin-bottom:30px;
+  background:linear-gradient(180deg,#fff 0%,#cdd9ff 100%);-webkit-background-clip:text;background-clip:text;color:transparent;}
+.qt-ref{font-size:.95rem;color:#a9beff;letter-spacing:.05em;font-weight:500;}
+.qt-series{font-size:.74rem;letter-spacing:.28em;color:#5f78c4;text-transform:uppercase;margin-bottom:14px;}
+
+/* ---------- 공통 섹션 배경 ---------- */
+.s-dark{background:var(--ink);}
+.s-darkblue{background:linear-gradient(160deg,#0c1838 0%,#05060f 100%);}
+.s-light{background:var(--mist);}
+.s-light .body-text{color:#2a2a2e;}
+.s-blue{background:linear-gradient(160deg,#1e3a8a 0%,#142a66 100%);}
+
+/* 성경말씀 카드 */
+.verse-card{border-left:3px solid var(--blue-bright);padding:2px 0 2px 24px;}
+/* 절별 한 줄 */
+.verse-line{font-family:var(--serif);color:rgba(255,255,255,.9);
+  font-size:clamp(.96rem,3vw,1.1rem);line-height:1.7;font-style:italic;
+  display:flex;gap:12px;align-items:baseline;margin-bottom:13px;word-break:keep-all;}
+.verse-line:last-child{margin-bottom:0;}
+.vnum{flex:none;font-family:var(--sans);font-style:normal;font-weight:700;font-size:.72rem;
+  color:var(--blue-bright);min-width:14px;text-align:right;opacity:.85;}
+#verse-slide .wrap{max-width:640px;}
+
+/* 결단/적용 - 체크 느낌 */
+.apply-item{display:flex;gap:16px;align-items:flex-start;margin-bottom:20px;}
+.apply-num{flex:none;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--blue-bright);
+  color:#bcccff;font-size:.85rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:4px;}
+
+/* 한줄 기도 */
+#prayer{background:radial-gradient(130% 130% at 50% 120%,#1e3a8a 0%,#0a112e 55%,#05060f 100%);text-align:center;align-items:center;}
+#prayer .wrap{display:flex;flex-direction:column;align-items:center;}
+.pray-label{font-size:.74rem;letter-spacing:.3em;color:#7d97e0;margin-bottom:28px;}
+.pray-text{font-family:var(--serif);font-weight:400;font-size:clamp(1.3rem,5vw,1.8rem);line-height:1.7;
+  color:#eef2ff;word-break:keep-all;}
+.amen{margin-top:36px;font-size:.8rem;letter-spacing:.4em;color:#7d97e0;}
+.end-mark{margin-top:48px;font-size:.72rem;color:#4a5a8c;letter-spacing:.1em;}
+
+/* 진행 점 네비 */
+#dots{position:fixed;right:clamp(12px,3vw,26px);top:50%;transform:translateY(-50%);z-index:50;
+  display:flex;flex-direction:column;gap:11px;}
+.dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.28);transition:all .35s;cursor:pointer;border:none;padding:0;}
+.dot.on-light{background:rgba(20,30,80,.25);}
+.dot.active{background:#fff;height:22px;border-radius:4px;}
+.dot.active.on-light{background:var(--blue);}
+
+/* 스크롤 안내 */
+.scroll-cue{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);z-index:5;
+  display:flex;flex-direction:column;align-items:center;gap:7px;color:rgba(255,255,255,.5);font-size:.7rem;letter-spacing:.2em;
+  animation:bob 2s ease-in-out infinite;}
+.scroll-cue.dim{color:rgba(20,30,80,.4);}
+.scroll-cue svg{width:18px;height:18px;}
+@keyframes bob{0%,100%{transform:translate(-50%,0);}50%{transform:translate(-50%,7px);}}
+
+/* 진행 바 */
+#bar{position:fixed;top:0;left:0;height:3px;background:var(--blue-bright);z-index:60;width:0;transition:width .2s;}
+
+@media(max-width:480px){
+  .slide{padding:48px 26px;}
+  .glow{width:340px;height:340px;}
+}
+</style>
+</head>
+<body>
+
+<div id="bar"></div>
+<nav id="dots"></nav>
+
+<main id="deck">
+
+  <!-- ① 훅 (질문형) -->
+  <section class="slide s-intro" id="intro">
+    <div class="glow"></div>
+    <div class="wrap">
+      <p class="qt-series reveal d1" id="x-series">아무도 흔들 수 없는 제자의 삶 · 07</p>
+      <p class="qt-date reveal d1" id="x-date">CALLING U</p>
+      <h1 class="qt-hook reveal d2" id="x-hook">맡긴다고 기도해 놓고,<br>왜 나는 <span style="-webkit-text-fill-color:#8fb0ff;color:#8fb0ff;">다시 움켜쥘까?</span></h1>
+      <p class="qt-ref reveal d3" id="x-ref" style="opacity:.55;">전적 위탁</p>
+    </div>
+    <div class="scroll-cue">
+      <span>SCROLL</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+  </section>
+
+  <!-- ② 공감 · 긴장 고조 -->
+  <section class="slide s-darkblue" id="verse-slide">
+    <div class="wrap">
+      <p class="body-text light reveal d2" id="x-empathy" style="font-size:clamp(1.18rem,4.2vw,1.55rem);line-height:1.9;">입으로는 “주님께 맡깁니다” 하면서도,<br>손은 끝내 내 계획을 놓지 못한다.<br><br>내가 쥐고 있어야 안심이 되고,<br>그럴수록 마음은 더 무겁고 불안하다.</p>
+    </div>
+  </section>
+
+  <!-- ③ 전환점 (말씀 등장) -->
+  <section class="slide s-dark">
+    <div class="wrap">
+      <div class="verse-card reveal d2">
+        <p class="verse-line"><span class="vnum">5</span>너는 마음을 다하여 여호와를 신뢰하고 네 명철을 의지하지 말라</p>
+        <p class="verse-line"><span class="vnum">6</span>너는 범사에 그를 인정하라 그리하면 네 길을 지도하시리라</p>
+      </div>
+      <p class="qt-ref reveal d3" id="x-verse-ref" style="margin-top:22px;color:#7d97e0;">― 잠언 3:5–6</p>
+      <p class="body-text light reveal d4" id="x-twist" style="margin-top:26px;">평안은 내가 쥐고 있을 때가 아니라, 그분께 <span style="color:#9db8ff;font-weight:600;">온전히 맡길 때</span> 찾아옵니다.</p>
+    </div>
+  </section>
+
+  <!-- ④ 핵심 통찰 -->
+  <section class="slide s-light">
+    <div class="wrap">
+      <p class="body-text dark reveal d2" id="x-study" style="font-size:clamp(1.18rem,4vw,1.42rem);">전적 위탁은 노력을 포기하는 것이 아닙니다. 내 명철과 계획의 주도권을 <span style="color:var(--blue);font-weight:600;">그분께 온전히 넘겨 드리는 것</span>입니다. 일부만 맡기는 것은 불안이지만, <span style="color:var(--blue);font-weight:600;">전부를 맡기는 것은 평안</span>입니다.</p>
+    </div>
+  </section>
+
+  <!-- ⑤ 내게 주는 의미 (고리 회수) -->
+  <section class="slide s-dark">
+    <div class="wrap">
+      <p class="body-text light reveal d2" id="x-feel">나를 내려놓고, 그분 곁에 머물고, 은혜로 나아가며 십자가를 지고 내딛었습니다. 그 모든 길의 끝은 하나. <span style="color:#9db8ff;font-weight:600;">내 인생 전부를 그분께 맡기는 것</span>입니다. 모든 것을 맡긴 자를, 그 무엇도 흔들 수 없습니다.</p>
+    </div>
+  </section>
+
+  <!-- ⑥ 약속 · 보장 -->
+  <section class="slide s-light">
+    <div class="wrap">
+      <p class="body-text dark reveal d2" id="x-promise" style="font-size:clamp(1.2rem,4.2vw,1.55rem);line-height:2.05;">내 손을 펴 맡긴다고<br>길을 잃는 것이 아닙니다.<br><br>맡긴 그 길을,<br><span style="color:var(--blue);font-weight:600;">그분이 친히 인도하십니다.</span><br><br>위탁의 끝은<br>표류가 아니라, 인도하심입니다.</p>
+    </div>
+  </section>
+
+  <!-- ⑦ 결단과 적용 -->
+  <section class="slide s-blue">
+    <div class="wrap">
+      <span class="chip reveal d1" style="color:#bcccff;">결단과 적용</span>
+      <h2 class="title reveal d2" style="margin-bottom:34px;">오늘, 이렇게<br>살겠습니다</h2>
+      <div class="apply-item reveal d3">
+        <span class="apply-num">1</span>
+        <p class="body-text light" id="x-apply1" style="font-family:var(--sans);font-size:1.08rem;line-height:1.7;">끝까지 움켜쥐던 그 한 가지를, 주님께 손 펴 맡깁니다.</p>
+      </div>
+      <div class="apply-item reveal d3">
+        <span class="apply-num">2</span>
+        <p class="body-text light" id="x-apply2" style="font-family:var(--sans);font-size:1.08rem;line-height:1.7;">내 계획보다 그분의 인도를, 오늘의 선택에서 먼저 구합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑧ 한줄 기도 -->
+  <section class="slide" id="prayer">
+    <div class="wrap">
+      <p class="pray-label reveal d1">오늘의 한 줄 기도</p>
+      <p class="pray-text reveal d2" id="x-prayer">주님, 일부만 맡기던<br>제 손을 활짝 펴 드립니다.<br>제 인생 전부를 맡기오니,<br>흔들리지 않게 붙들어 주소서.</p>
+      <p class="amen reveal d3">A M E N</p>
+      <p class="end-mark reveal d4" id="x-end">아무도 흔들 수 없는 제자의 삶 · 07</p>
+    </div>
+  </section>
+
+</main>
+
+<script>
+/* 슬라이드 active 처리 + 점/바 동기화 */
+const deck=document.getElementById('deck');
+const slides=[...document.querySelectorAll('.slide')];
+const dotsNav=document.getElementById('dots');
+const bar=document.getElementById('bar');
+
+slides.forEach((s,i)=>{
+  const b=document.createElement('button');
+  b.className='dot';
+  b.addEventListener('click',()=>slides[i].scrollIntoView({behavior:'smooth'}));
+  dotsNav.appendChild(b);
+});
+const dots=[...document.querySelectorAll('.dot')];
+
+const io=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting && e.intersectionRatio>0.55){
+      const i=slides.indexOf(e.target);
+      slides.forEach(s=>s.classList.remove('active'));
+      e.target.classList.add('active');
+      dots.forEach((d,di)=>d.classList.toggle('active',di===i));
+      const light=e.target.classList.contains('s-light');
+      dots.forEach(d=>d.classList.toggle('on-light',light));
+    }
+  });
+},{threshold:[0,.55,1]});
+slides.forEach(s=>io.observe(s));
+slides[0].classList.add('active');
+
+deck.addEventListener('scroll',()=>{
+  const p=deck.scrollTop/(deck.scrollHeight-deck.clientHeight);
+  bar.style.width=(p*100)+'%';
+});
+
+/* 키보드 화살표 네비 */
+let cur=0;
+window.addEventListener('keydown',e=>{
+  if(e.key==='ArrowDown'||e.key==='PageDown'){cur=Math.min(cur+1,slides.length-1);slides[cur].scrollIntoView({behavior:'smooth'});}
+  if(e.key==='ArrowUp'||e.key==='PageUp'){cur=Math.max(cur-1,0);slides[cur].scrollIntoView({behavior:'smooth'});}
+});
+</script>
+</body>
+</html>

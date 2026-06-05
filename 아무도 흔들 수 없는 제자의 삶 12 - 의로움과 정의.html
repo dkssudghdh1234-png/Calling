@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>아무도 흔들 수 없는 제자의 삶 12 - 의로움과 정의</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+/* =========================================================
+   매일 수정할 필요 없는 디자인 영역
+   - 이미지 분석: 다크 몰입형 + 글래스모피즘 카드 + 그라데이션 포털
+   ========================================================= */
+:root{
+  --blue:#1e3a8a;        /* 로얄 블루 */
+  --blue-bright:#5b8cff; /* 밝은 블루 (악센트) */
+  --ink:#05060c;         /* 검정 */
+  --ink-soft:#0a0d18;
+  --paper:#ffffff;       /* 흰 */
+  --line:rgba(255,255,255,.14);
+  --serif:'Gowun Batang', serif;
+  --sans:'Pretendard','Pretendard Variable',-apple-system,sans-serif;
+  /* 포털 그라데이션 (ABOUT ME 이미지) */
+  --g1:#ff7a59; --g2:#ff5fa2; --g3:#b96ae0; --g4:#7db8ff;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;overflow:hidden;background:var(--ink);}
+body{font-family:var(--sans);color:var(--paper);}
+
+/* 슬라이드 컨테이너 */
+#deck{height:100dvh;width:100vw;overflow-y:scroll;scroll-snap-type:y mandatory;scroll-behavior:smooth;}
+#deck::-webkit-scrollbar{display:none;}
+#deck{-ms-overflow-style:none;scrollbar-width:none;}
+
+.slide{
+  height:100dvh;width:100%;scroll-snap-align:start;scroll-snap-stop:always;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:clamp(28px,7vw,72px) clamp(22px,6vw,72px);
+  position:relative;overflow:hidden;
+}
+.wrap{max-width:660px;width:100%;margin:0 auto;position:relative;z-index:2;}
+
+/* 등장 애니메이션 (원본 동일) */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1);}
+.slide.active .reveal{opacity:1;transform:none;}
+.slide.active .d1{transition-delay:.10s;}
+.slide.active .d2{transition-delay:.25s;}
+.slide.active .d3{transition-delay:.40s;}
+.slide.active .d4{transition-delay:.55s;}
+
+/* 글래스모피즘 카드 (이미지 2·3 분석) */
+.glass{
+  background:linear-gradient(155deg,rgba(125,160,220,.16),rgba(30,45,80,.10));
+  backdrop-filter:blur(22px) saturate(125%);
+  -webkit-backdrop-filter:blur(22px) saturate(125%);
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:26px;
+  padding:clamp(28px,7vw,46px);
+  box-shadow:0 24px 70px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.18);
+}
+
+/* 챕터 라벨 */
+.chip{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;font-weight:600;letter-spacing:.18em;
+  text-transform:uppercase;color:#9db8ff;margin-bottom:20px;}
+.chip::before{content:"";width:26px;height:1.5px;background:var(--blue-bright);display:inline-block;}
+
+h2.title{font-family:var(--sans);font-weight:800;line-height:1.2;letter-spacing:-.02em;
+  font-size:clamp(1.7rem,6vw,2.6rem);margin-bottom:24px;}
+
+.body-text{font-family:var(--sans);font-size:clamp(1.08rem,3.7vw,1.3rem);line-height:1.95;
+  font-weight:400;word-break:keep-all;color:rgba(255,255,255,.92);text-align:center;}
+.accent{color:#9db8ff;font-weight:600;}
+
+/* ---------- 공통 섹션 배경 (다크 몰입형) ---------- */
+.s-a{background:radial-gradient(130% 120% at 50% 0%,#13213f 0%,#070a14 55%,#05060c 100%);}
+.s-b{background:radial-gradient(120% 120% at 80% 100%,#1a2547 0%,#090c18 60%,#05060c 100%);}
+.s-c{background:radial-gradient(120% 120% at 20% 20%,#241a3f 0%,#0a0c1a 60%,#05060c 100%);}
+.s-blue{background:radial-gradient(130% 130% at 50% 0%,#1e3a8a 0%,#10204e 55%,#070b1c 100%);}
+
+/* 은은한 배경 글로우 (이미지의 앰비언트 빛) */
+.amb{position:absolute;width:460px;height:460px;border-radius:50%;filter:blur(30px);z-index:0;opacity:.5;pointer-events:none;}
+.amb.blue{background:radial-gradient(circle,rgba(91,140,255,.4) 0%,transparent 70%);}
+.amb.pink{background:radial-gradient(circle,rgba(255,95,162,.28) 0%,transparent 70%);}
+
+/* 성경말씀 카드 */
+.verse-card{border-left:3px solid var(--blue-bright);padding:4px 0 4px 24px;text-align:left;}
+.verse-line{font-family:var(--sans);color:rgba(255,255,255,.92);
+  font-size:clamp(1rem,3.4vw,1.18rem);line-height:1.85;font-style:italic;word-break:keep-all;}
+.verse-ref{font-size:.95rem;color:#9db8ff;letter-spacing:.05em;font-weight:500;}
+
+/* 결단/적용 */
+.apply-item{display:flex;gap:16px;align-items:flex-start;margin-bottom:20px;text-align:left;}
+.apply-num{flex:none;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--blue-bright);
+  color:#bcccff;font-size:.85rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:3px;}
+.apply-item p{font-family:var(--sans);font-size:1.06rem;line-height:1.7;color:rgba(255,255,255,.92);word-break:keep-all;}
+
+/* ---------- 인트로 (ABOUT ME 포털 스타일) ---------- */
+#intro{background:#05060c;text-align:center;align-items:center;}
+#intro .wrap{display:flex;flex-direction:column;align-items:center;z-index:3;}
+/* 그라데이션 포털 (문) */
+.portal{position:absolute;top:8%;left:50%;transform:translateX(-50%);
+  width:min(46vw,210px);height:min(64vh,430px);border-radius:8px;z-index:1;
+  background:linear-gradient(180deg,var(--g1) 0%,var(--g2) 38%,var(--g3) 66%,var(--g4) 100%);
+  filter:blur(2px);
+  box-shadow:0 0 90px 30px rgba(255,95,162,.35),0 0 140px 60px rgba(125,150,255,.25);}
+/* 바닥 반사광 */
+.floor{position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+  width:min(60vw,300px);height:34vh;z-index:1;
+  background:linear-gradient(180deg,rgba(140,180,255,.5) 0%,transparent 80%);
+  filter:blur(14px);border-radius:50% 50% 0 0;opacity:.55;}
+/* 네온 글로우 타이틀 */
+.neon{font-family:var(--sans);font-weight:800;letter-spacing:-.01em;
+  font-size:clamp(2.6rem,12vw,4.6rem);line-height:1.05;color:#fff;
+  text-shadow:0 0 14px rgba(255,255,255,.9),0 0 34px rgba(160,190,255,.7),0 0 60px rgba(120,150,255,.5);
+  margin-bottom:26px;position:relative;}
+.neon .star{color:var(--g2);text-shadow:0 0 18px rgba(255,95,162,.9),0 0 40px rgba(255,95,162,.6);}
+.qt-series{font-size:.74rem;letter-spacing:.28em;color:#90a6e8;text-transform:uppercase;margin-bottom:14px;}
+.qt-mode{font-size:.8rem;letter-spacing:.32em;color:#7d97e0;font-weight:500;margin-bottom:26px;}
+.qt-hook{font-family:var(--serif);font-weight:700;font-size:clamp(1.5rem,6vw,2.1rem);
+  line-height:1.45;letter-spacing:-.01em;
+  background:linear-gradient(180deg,#fff 0%,#e3ebff 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 0 20px rgba(190,210,255,.4);}
+.calling{margin-top:30px;font-size:.72rem;letter-spacing:.42em;color:rgba(200,215,255,.82);font-weight:600;}
+
+/* 한줄 기도 */
+#prayer{background:radial-gradient(130% 130% at 50% 120%,#1e3a8a 0%,#0a112e 55%,#05060c 100%);text-align:center;align-items:center;}
+#prayer .wrap{display:flex;flex-direction:column;align-items:center;}
+.pray-label{font-size:.74rem;letter-spacing:.3em;color:#7d97e0;margin-bottom:26px;}
+.pray-text{font-family:var(--serif);font-weight:400;font-size:clamp(1.3rem,5vw,1.8rem);line-height:1.7;
+  color:#eef2ff;word-break:keep-all;}
+.amen{margin-top:34px;font-size:.8rem;letter-spacing:.4em;color:#7d97e0;}
+.end-mark{margin-top:46px;font-size:.72rem;color:#5a6aa0;letter-spacing:.1em;}
+
+/* 진행 점 네비 (원본 동일) */
+#dots{position:fixed;right:clamp(12px,3vw,26px);top:50%;transform:translateY(-50%);z-index:50;
+  display:flex;flex-direction:column;gap:11px;}
+.dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.28);transition:all .35s;cursor:pointer;border:none;padding:0;}
+.dot.active{background:#fff;height:22px;border-radius:4px;}
+
+/* 스크롤 안내 */
+.scroll-cue{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);z-index:5;
+  display:flex;flex-direction:column;align-items:center;gap:7px;color:rgba(255,255,255,.55);font-size:.7rem;letter-spacing:.2em;
+  animation:bob 2s ease-in-out infinite;}
+.scroll-cue svg{width:18px;height:18px;}
+@keyframes bob{0%,100%{transform:translate(-50%,0);}50%{transform:translate(-50%,7px);}}
+
+/* 진행 바 */
+#bar{position:fixed;top:0;left:0;height:3px;background:var(--blue-bright);z-index:60;width:0;transition:width .2s;}
+
+@media(max-width:480px){
+  .slide{padding:46px 22px;}
+  .amb{width:330px;height:330px;}
+}
+</style>
+</head>
+<body>
+
+<div id="bar"></div>
+<nav id="dots"></nav>
+
+<main id="deck">
+
+  <!-- ① 훅 (인트로 · ABOUT ME 포털) -->
+  <section class="slide" id="intro">
+    <div class="portal"></div>
+    <div class="floor"></div>
+    <div class="wrap">
+      <p class="qt-series reveal d1" style="color:#ffffff;">아무도 흔들 수 없는 제자의 삶 · 12</p>
+      <h1 class="neon reveal d2">의로움과<br><span style="position:relative;">정의<span class="star" style="position:absolute;left:100%;top:0;margin-left:6px;">✳</span></span></h1>
+      <p class="qt-hook reveal d3">“교회가 이러면 안 되죠”<br>“저 사람은 틀렸어요”</p>
+      <p class="calling reveal d4">CALLING U</p>
+    </div>
+    <div class="scroll-cue">
+      <span>SCROLL</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+  </section>
+
+  <!-- ② 공감 · 긴장 고조 -->
+  <section class="slide s-b">
+    <div class="amb blue" style="top:-100px;right:-80px;"></div>
+    <div class="wrap">
+      <div class="glass reveal d2">
+        <p class="body-text">나는 옳았다. 적어도 내 눈에는 그랬다.<br>그래서 비판은 정당하게 느껴졌다.<br><br>교회의 허물, 동역자의 실수, 리더의 부족함, 내 의로움은 그것들을 정확히 겨눈다.<br><br>그런데 내 정의가 향한 끝에는, 늘 <span class="accent">상처 입은 공동체와 멀어진 지체</span>가 있었다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ③ 전환점 (말씀 등장) -->
+  <section class="slide s-a">
+    <div class="amb blue" style="bottom:-120px;left:-90px;"></div>
+    <div class="wrap">
+      <div class="glass reveal d2">
+        <div class="verse-card">
+          <p class="verse-line">“사람이 성내는 것이 하나님의 의를 이루지 못함이라”</p>
+        </div>
+        <p class="verse-ref reveal d3" style="margin-top:20px;text-align:left;">― 야고보서 1:20</p>
+        <p class="body-text reveal d4" style="margin-top:24px;text-align:left;font-size:clamp(1.02rem,3.4vw,1.18rem);">내 의분이 곧 하나님의 의는 아니었습니다.<br><span class="accent">옳음이 사랑을 잃으면, 그저 칼이 됩니다.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ④ 핵심 통찰 -->
+  <section class="slide s-c">
+    <div class="amb pink" style="top:-90px;left:-70px;"></div>
+    <div class="wrap">
+      <div class="glass reveal d2">
+        <p class="body-text">내 의로움이 교회와 동역자를 베는 무기가 될 때, <span class="accent">그것은 더 이상 정의가 아닙니다.</span><br><br>진짜 정의는 무너뜨리지 않고 세웁니다. 정죄하지 않고 품습니다.<br><br>옳음을 쥔 손이 사랑을 놓치는 순간, 나는 의인이 아니라 비판자가 됩니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑤ 내게 주는 의미 (고리 회수) -->
+  <section class="slide s-a">
+    <div class="amb blue" style="top:-100px;right:-90px;"></div>
+    <div class="wrap">
+      <div class="glass reveal d2">
+        <p class="body-text">나를 죄인으로 아는 자리에서, 내 의로움도 다시 봅니다.<br><br>남을 베던 정의의 칼을 내려놓고, <span class="accent">세우고 품는 길</span>을 택합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑥ 약속 · 보장 -->
+  <section class="slide s-b">
+    <div class="amb pink" style="bottom:-110px;right:-80px;"></div>
+    <div class="wrap">
+      <div class="glass reveal d2">
+        <p class="body-text">내 정의를 내려놓는다고,<br>불의를 용납하는 것이 아닙니다.<br><br>비판으로 무너진 자리에는 상처만 남지만,<br>사랑으로 품은 자리에는 <span class="accent">회복이 자랍니다.</span><br><br>세우는 정의를 택한 자를,<br><span class="accent">하나님이 친히 세우십니다.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑦ 결단과 적용 -->
+  <section class="slide s-blue">
+    <div class="wrap">
+      <span class="chip reveal d1" style="color:#bcccff;">결단과 적용</span>
+      <h2 class="title reveal d2" style="margin-bottom:32px;">오늘, 이렇게<br>살겠습니다</h2>
+      <div class="glass reveal d2">
+        <div class="apply-item">
+          <span class="apply-num">1</span>
+          <p>비판하려던 그 한 사람을, 오늘은 비판 대신 기도로 품습니다.</p>
+        </div>
+        <div class="apply-item" style="margin-bottom:0;">
+          <span class="apply-num">2</span>
+          <p>내가 옳다고 느낀 순간일수록, 먼저 사랑을 점검합니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑧ 한줄 기도 -->
+  <section class="slide" id="prayer">
+    <div class="wrap">
+      <p class="pray-label reveal d1">오늘의 한 줄 기도</p>
+      <p class="pray-text reveal d2">주님, 제 의로움이<br>칼이 되지 않게 하소서.<br>옳음으로 베지 않고,<br>사랑으로 세우게 하소서.</p>
+      <p class="amen reveal d3">A M E N</p>
+      <p class="end-mark reveal d4">아무도 흔들 수 없는 제자의 삶 · 12</p>
+    </div>
+  </section>
+
+</main>
+
+<script>
+/* 슬라이드 active 처리 + 점/바 동기화 (원본 동일) */
+const deck=document.getElementById('deck');
+const slides=[...document.querySelectorAll('.slide')];
+const dotsNav=document.getElementById('dots');
+const bar=document.getElementById('bar');
+
+slides.forEach((s,i)=>{
+  const b=document.createElement('button');
+  b.className='dot';
+  b.addEventListener('click',()=>slides[i].scrollIntoView({behavior:'smooth'}));
+  dotsNav.appendChild(b);
+});
+const dots=[...document.querySelectorAll('.dot')];
+
+const io=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting && e.intersectionRatio>0.55){
+      const i=slides.indexOf(e.target);
+      slides.forEach(s=>s.classList.remove('active'));
+      e.target.classList.add('active');
+      dots.forEach((d,di)=>d.classList.toggle('active',di===i));
+    }
+  });
+},{threshold:[0,.55,1]});
+slides.forEach(s=>io.observe(s));
+slides[0].classList.add('active');
+
+deck.addEventListener('scroll',()=>{
+  const p=deck.scrollTop/(deck.scrollHeight-deck.clientHeight);
+  bar.style.width=(p*100)+'%';
+});
+
+/* 키보드 화살표 네비 */
+let cur=0;
+window.addEventListener('keydown',e=>{
+  if(e.key==='ArrowDown'||e.key==='PageDown'){cur=Math.min(cur+1,slides.length-1);slides[cur].scrollIntoView({behavior:'smooth'});}
+  if(e.key==='ArrowUp'||e.key==='PageUp'){cur=Math.max(cur-1,0);slides[cur].scrollIntoView({behavior:'smooth'});}
+});
+</script>
+</body>
+</html>
